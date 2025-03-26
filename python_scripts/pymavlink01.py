@@ -1,5 +1,6 @@
 import pymavlink.mavutil as utility
 import time 
+import pymavlink.dialects.v20.all  as dialect
 
 vehicle = utility.mavlink_connection(device='udpin:127.0.0.1:14550', udp_timeout=5)
 
@@ -9,7 +10,7 @@ if vehicle.wait_heartbeat():
 
 while True:
     try:
-        message = vehicle.recv_match(blocking=True)
+        message = vehicle.recv_match(blocking=True, type=dialect.MAVLink_system_time_message.name)
         # if message != None:
         time.sleep(2)
         print (message)
